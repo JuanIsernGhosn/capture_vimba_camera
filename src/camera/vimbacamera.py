@@ -1,4 +1,3 @@
-'''
 from camera.camera import Camera
 from pymba import Vimba
 
@@ -34,4 +33,3 @@ class VimbaCamera(Camera):
         self.camera.disarm()
         self.camera.close()
         Vimba().shutdown()
-'''
