@@ -8,12 +8,13 @@ def capture(camera_index, file_path, codec):
 
 
     frame_fixer = FrameFixer(720, 1280)
-    frame_capturer = VideoWriter(filename=correct_filepath(file_path), fps=30, height=720, width=1280, codec=codec)
-    frame_retrieval = FrameRetrieval(frame_fixer, frame_capturer)
+    video_writer = VideoWriter(filename=correct_filepath(file_path), fps=30, height=720, width=1280, codec=codec)
+    frame_retrieval = FrameRetrieval(frame_fixer, video_writer)
     process_capturer = VimbaCamera(frame_retrieval, index=camera_index)
 
     process_capturer.start()
-    frame_capturer.release()
+    process_capturer.join()
+    video_writer.release()
 
     print(correct_filepath(file_path))
 

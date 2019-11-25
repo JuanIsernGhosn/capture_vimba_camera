@@ -31,7 +31,6 @@ class VideoWriterRGB(object):
         else:
             fourcc = cv2.VideoWriter_fourcc(*codec)
         out = cv2.VideoWriter(filename=filename,
-                              apiPreference=cv2.CAP_GSTREAMER,
                               fourcc=fourcc,
                               fps=fps,
                               frameSize=(width, height))
