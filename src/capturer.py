@@ -13,6 +13,7 @@ def capture(camera_index, file_path, codec):
     process_capturer = VimbaCamera(frame_retrieval, index=camera_index)
 
     process_capturer.start()
+    frame_capturer.release()
 
     print(correct_filepath(file_path))
 

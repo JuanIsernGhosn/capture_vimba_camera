@@ -28,6 +28,7 @@ class VimbaCamera(Camera):
 
             self.stop_recording()
 
+
     def stop_recording(self):
         self.camera.stop_frame_acquisition()
         self.camera.disarm()

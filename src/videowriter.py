@@ -16,6 +16,7 @@ class VideoWriter(object):
         self.v_out = out
 
     def write(self, image):
+        print(image)
         self.v_out.write(image)
 
     def release(self):
