@@ -16,7 +16,7 @@ class VimbaCamera(Camera):
             self.camera = vimba.camera(self.index)
             self.camera.open()
             self.camera.arm('Continuous', self.frame_retrieval.frame_callback)
-            self.camera.AcquisitionFrameRateAbs = self.configuration.get_fps()
+            self.camera.AcquisitionFrameRateAbs = 30
             self.camera.TriggerSource = 'FixedRate'
             self.camera.PixelFormat = 'BayerRG8'
             self.camera.SyncOutSelector = 'SyncOut1'

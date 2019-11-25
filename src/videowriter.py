@@ -37,7 +37,6 @@ class VideoWriterRGB(object):
         self.out = out
 
     def write(self, image):
-        image = utils.convert_to_cv8uc3(image)
         self.out.write(image)
 
     def release(self):
