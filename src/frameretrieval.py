@@ -9,10 +9,9 @@ PIXEL_FORMATS_CONVERSIONS = {
 
 class FrameRetrieval(object):
 
-    def __init__(self, frame_fixer, video_writer, file_path):
+    def __init__(self, frame_fixer, video_writer):
         self.frame_fixer = frame_fixer
         self.video_writer = video_writer
-        self.file_path = file_path
 
     def frame_callback(self, frame: Frame, delay: Optional[int] = 1) -> None:
         """
