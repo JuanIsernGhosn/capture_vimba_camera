@@ -29,5 +29,6 @@ class FrameRetrieval(object):
             pass
 
         image = self.frame_fixer.fix_frame(image)
+        print(image)
 
-        self.video_writer.write(image)
+        # self.video_writer.write(image)
