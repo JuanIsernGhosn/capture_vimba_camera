@@ -1,5 +1,6 @@
 from camera.camera import Camera
 from pymba import Vimba
+import time
 
 
 class VimbaCamera(Camera):
@@ -23,8 +24,7 @@ class VimbaCamera(Camera):
             self.camera.SyncOutSource = 'Exposing'
             self.camera.start_frame_acquisition()
 
-            while True:
-                continue
+            time.sleep(5)
 
             self.stop_recording()
 
