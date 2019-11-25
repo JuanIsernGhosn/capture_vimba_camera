@@ -21,5 +21,5 @@ results = parser.parse_args()
 if __name__ == '__main__':
     camera_index = results.camera_index if results.camera_index is not None else 0
     file_path = results.file_path if results.file_path is not None else './untitle.avi'
-    codec = results.codec if results.codec is not None else 'MJPG'
+    codec = results.codec if results.codec is not None else None
     capturer.capture(camera_index=camera_index, file_path=file_path, codec=codec)
