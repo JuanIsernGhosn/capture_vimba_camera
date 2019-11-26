@@ -16,7 +16,6 @@ class VideoWriter(object):
         self.v_out = out
 
     def write(self, image):
-        print(image)
         self.v_out.write(image)
 
     def release(self):
@@ -60,7 +59,6 @@ class VideoWriterPNG(object):
 
     def write(self, image):
         image = cv2.resize(image, (self.width, self.height))
-        image = image.astype(np.uint16)
         filename = os.path.join(self.basedir, "frame_{}_fps_{}.png".format(self.current_frame_id, self.fps))
         cv2.imwrite(filename, image)
         self.current_frame_id = self.current_frame_id + 1
