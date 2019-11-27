@@ -1,6 +1,7 @@
 from typing import Optional
 import cv2
 from pymba import Frame
+import time
 
 PIXEL_FORMATS_CONVERSIONS = {
     'BayerRG8': cv2.COLOR_BAYER_RG2RGB,
@@ -8,9 +9,10 @@ PIXEL_FORMATS_CONVERSIONS = {
 
 class FrameRetrieval(object):
 
-    def __init__(self, frame_fixer, buffer):
+    def __init__(self, frame_fixer, buffer,time_buffer):
         self.frame_fixer = frame_fixer
         self.buffer = buffer
+        self.time_buffer = time_buffer
 
     def frame_callback(self, frame: Frame, delay: Optional[int] = 1) -> None:
         """
@@ -27,6 +29,7 @@ class FrameRetrieval(object):
             image = self.frame_fixer.fix_frame(image)
 
             self.buffer.put(image)
+            self.time_buffer.put(time.time())
         except KeyError:
             pass
 
