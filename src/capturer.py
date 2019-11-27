@@ -31,16 +31,22 @@ def capture(camera_index, file_path, codec):
     video_writer = VideoWriter(filename=filename, fps=30, height=964, width=1264, codec=codec)
 
     time_writer = TimeWriter(filename=filename)
-    while process_capturer.is_alive() or buffer.qsize()>0:
-        if buffer.qsize() > 0:
-            img = buffer.get()
-            timestamp = time_buffer.get()
-            video_writer.write(img)
-            time_writer.write(timestamp)
-            if viewer.show_frame(img):
-                stop_manager.set_stop()
 
-    video_writer.release()
+    try:
+        while process_capturer.is_alive() or buffer.qsize()>0:
+            if buffer.qsize() > 0:
+                img = buffer.get()
+                timestamp = time_buffer.get()
+                video_writer.write(img)
+                time_writer.write(timestamp)
+                if viewer.show_frame(img):
+                    stop_manager.set_stop()
+    except:
+        print("Error occurred")
+        stop_manager.set_stop()
+    finally:
+        video_writer.release()
+        time_writer.release()
     process_capturer.join()
 
 
