@@ -34,11 +34,8 @@ def capture(camera_index, file_path, codec):
             if viewer.show_frame(img):
                 stop_manager.set_stop()
 
-
     video_writer.release()
     process_capturer.join()
-
-    print(correct_filepath(file_path))
 
 
 def correct_filepath(file_path):
