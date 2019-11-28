@@ -7,13 +7,13 @@ from timewriter import TimeWriter
 from multiprocessing.managers import BaseManager
 import os
 from multiprocessing import Queue
-from view.viewerapp import App
+from viewer import Viewer
+
 
 def capture(camera_index, file_path, codec):
 
     buffer = Queue(128)
     time_buffer = Queue(128)
-
     BaseManager.register('StopManager', StopManager)
     manager = BaseManager()
     manager.start()
@@ -21,17 +21,34 @@ def capture(camera_index, file_path, codec):
 
     frame_fixer = FrameFixer(964, 1292)
     frame_retrieval = FrameRetrieval(frame_fixer, buffer, time_buffer)
+
     stop_manager.set_start()
     process_capturer = VimbaCamera(frame_retrieval, index=camera_index, manager=stop_manager)
     process_capturer.start()
+    viewer = Viewer("Camera 0", (int(1292*0.25), int(964*0.25)))
 
     filename = correct_filepath(file_path)
-
     video_writer = VideoWriter(filename=filename, fps=30, height=964, width=1292, codec=codec)
+
     time_writer = TimeWriter(filename=filename)
 
-    viewer = App(buffer, time_buffer, stop_manager, video_writer, time_writer)
-    viewer.show()
+    try:
+        while process_capturer.is_alive() or buffer.qsize()>0:
+            if buffer.qsize() > 0:
+                img = buffer.get()
+                timestamp = time_buffer.get()
+                print(buffer.qsize())
+                video_writer.write(img)
+                time_writer.write(timestamp)
+                if viewer.show_frame(img):
+                    stop_manager.set_stop()
+    except:
+        print("Error occurred")
+        stop_manager.set_stop()
+    finally:
+        video_writer.release()
+        time_writer.release()
+    process_capturer.join()
 
 
 def correct_filepath(file_path):
