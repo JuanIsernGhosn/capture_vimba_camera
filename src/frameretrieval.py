@@ -27,9 +27,9 @@ class FrameRetrieval(object):
         try:
             image = cv2.cvtColor(image, PIXEL_FORMATS_CONVERSIONS[frame.pixel_format])
             image = self.frame_fixer.fix_frame(image)
-
             self.buffer.put(image)
             self.time_buffer.put(time.time())
+            print(self.buffer.qsize())
         except KeyError:
             pass
 

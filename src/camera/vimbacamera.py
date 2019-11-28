@@ -27,6 +27,8 @@ class VimbaCamera(Camera):
             while self.manager.get_state():
                 pass
 
+            print("paro la cámara")
+
             self.stop_recording()
 
     def stop_recording(self):
